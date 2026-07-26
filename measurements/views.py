@@ -826,7 +826,7 @@ def export_historique_pdf(request):
             'date_fin': date_fin,
         })
         from pathlib import Path
-        pdf = weasyprint.HTML(string=html, base_url=Path(__file__).resolve().parent.parent).write_pdf()
+        pdf = weasyprint.HTML(string=html, base_url=Path(__file__).resolve().parent.parent.as_uri()).write_pdf()
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="historique_agents.pdf"'
         return response
@@ -867,7 +867,7 @@ def reception_pdf(request):
             'date_remise': datetime.now().strftime('%d/%m/%Y %H:%M'),
             'responsable': request.user.get_full_name() or request.user.username,
         })
-        pdf = weasyprint.HTML(string=html, base_url=Path(__file__).resolve().parent.parent).write_pdf()
+        pdf = weasyprint.HTML(string=html, base_url=Path(__file__).resolve().parent.parent.as_uri()).write_pdf()
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="bon_reception.pdf"'
         return response
